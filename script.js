@@ -41,7 +41,7 @@ const showSection = section => {
 const displayOrCloseForm = () => showSection(mainSection.classList.contains('hidden') ? mainSection : formSection);
 
 addBookmarkButton.addEventListener('click', (e) => {
-    Array.from(categoryNames).forEach(el => el.innerText = categoryDropdown.value);
+    Array.from(categoryNames).forEach(el => el.textContent = categoryDropdown.value);
     displayOrCloseForm();
 })
 
