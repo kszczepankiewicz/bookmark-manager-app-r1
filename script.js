@@ -46,6 +46,10 @@ closeFormButton.addEventListener('click', displayOrCloseForm);
 
 addBookmarkButtonForm.addEventListener('click', (e) => {
     const bookmarks = getBookmarks();
+    if (!nameInput.value || !url) {
+        alert('Name or URL cannot be empty');
+        return;
+    }
     try {
         new URL.parse(url.value)
     } catch (error) {
