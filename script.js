@@ -52,7 +52,7 @@ addBookmarkButtonForm.addEventListener('click', (e) => {
     }
 
     try {
-        new URL.parse(url.value)
+        new URL(url.value)
     } catch (error) {
         alert('Invalid url');
         // return;  //fcc test fails
