@@ -80,7 +80,7 @@ deleteBookmarkButton.addEventListener('click', (e) => {
     }
 
     const bookmarks = getBookmarks();
-    const index = bookmarks.findIndex(b => b.name === bookmarkToDelete.value && b.category === category)
+    const index = bookmarks.findIndex(b => b.name === bookmarkToDelete.value && b.category === category.value)
     if (index === -1) {
         alert('Bookmark not found');
         return;
