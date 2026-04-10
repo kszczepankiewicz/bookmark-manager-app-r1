@@ -97,5 +97,4 @@ deleteBookmarkButton.addEventListener('click', (e) => {
     bookmarks.splice(index, 1)
     localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
     categoryList.innerHTML = displayBookmarks(bookmarks.filter(b => b.category === category.value)) || '<p>No Bookmarks Found</p>';
-
 })
