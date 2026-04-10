@@ -20,7 +20,7 @@ const getBookmarks = () => {
         if (!bookmarks) return [];
         bookmarks = JSON.parse(bookmarks);
         if (!Array.isArray(bookmarks)) return [];
-        if (!bookmarks.every(b => ['name', 'category', 'url'].every(p => p in b))) return [];
+        if (!bookmarks.every(b => ['name', 'category', 'url'].every(p => Object.hasOwn(b, p)))) return [];
         return bookmarks;
     } catch (error) {
         return [];
