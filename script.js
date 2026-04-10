@@ -7,7 +7,7 @@ const addBookmarkButtonForm = document.getElementById('add-bookmark-button-form'
 const closeFormButton = document.getElementById('close-form-button');
 const closeListButton = document.getElementById('close-list-button');
 const viewCategoryButton = document.getElementById('view-category-button');
-const nameInput = document.getElementById('name');
+const nameEl = document.getElementById('name');
 const url = document.getElementById('url');
 const categoryList = document.getElementById('category-list');
 
@@ -46,7 +46,7 @@ closeFormButton.addEventListener('click', displayOrCloseForm);
 addBookmarkButtonForm.addEventListener('click', (e) => {
     const bookmarks = getBookmarks();
 
-    if (!nameInput.value || !url) {
+    if (!nameEl.value || !url) {
         alert('Name or URL cannot be empty');
         return;
     }
@@ -58,16 +58,16 @@ addBookmarkButtonForm.addEventListener('click', (e) => {
         // return;  //fcc test fails
     }
 
-    bookmarks.push({ name: nameInput.value, category: category.value, url: url.value });
+    bookmarks.push({ name: nameEl.value, category: category.value, url: url.value });
     localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
-    nameInput.value = '';
+    nameEl.value = '';
     url.value = '';
     displayOrCloseForm();
 });
 
 const displayOrHideCategory = () => showSection(mainSection.classList.contains('hidden') ? mainSection : bookmarkListSection);
 
-const displayBookmarks = (bookmarks) => bookmarks.map(b => `<input type='radio' name='${b.category}' id='${b.name}' value='${b.name}'><label for='${b.name}'><a href='${b.url}'>${b.name}</a></label>`).join('\n');
+const renderBookmarks = (bookmarks) => bookmarks.map(b => `<input type='radio' name='${b.category}' id='${b.name}' value='${b.name}'><label for='${b.name}'><a href='${b.url}'>${b.name}</a></label>`).join('\n');
 
 viewCategoryButton.addEventListener('click', (e) => {
     showSection(bookmarkListSection);
@@ -79,7 +79,7 @@ viewCategoryButton.addEventListener('click', (e) => {
         return
     }
 
-    categoryList.innerHTML = displayBookmarks(bookmarks);
+    categoryList.innerHTML = renderBookmarks(bookmarks);
 });
 
 closeListButton.addEventListener('click', (e) => showSection(mainSection));
@@ -102,5 +102,5 @@ deleteBookmarkButton.addEventListener('click', (e) => {
 
     bookmarks.splice(index, 1)
     localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
-    categoryList.innerHTML = displayBookmarks(bookmarks.filter(b => b.category === category.value)) || '<p>No Bookmarks Found</p>';
+    categoryList.innerHTML = renderBookmarks(bookmarks.filter(b => b.category === category.value)) || '<p>No Bookmarks Found</p>';
 });
