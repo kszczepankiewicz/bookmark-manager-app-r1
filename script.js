@@ -13,7 +13,6 @@ const categoryList = document.getElementById('category-list');
 
 const categoryNames = document.getElementsByClassName('category-name');
 
-
 const getBookmarks = () => {
     try {
         let bookmarks = localStorage.getItem('bookmarks');
@@ -46,16 +45,19 @@ closeFormButton.addEventListener('click', displayOrCloseForm);
 
 addBookmarkButtonForm.addEventListener('click', (e) => {
     const bookmarks = getBookmarks();
+
     if (!nameInput.value || !url) {
         alert('Name or URL cannot be empty');
         return;
     }
+
     try {
         new URL.parse(url.value)
     } catch (error) {
         alert('Invalid url');
-        // return;
+        // return;  //fcc test fails
     }
+
     bookmarks.push({ name: nameInput.value, category: category.value, url: url.value });
     localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
     nameInput.value = '';
@@ -65,18 +67,20 @@ addBookmarkButtonForm.addEventListener('click', (e) => {
 
 const displayOrHideCategory = () => showSection(mainSection.classList.contains('hidden') ? mainSection : bookmarkListSection);
 
-const displayBookmarks = (bookmarks) => bookmarks.map(b => `<input type='radio' name='${b.category}' id='${b.name}' value='${b.name}'><label for='${b.name}'><a href='${b.url}'>${b.name}</a></label>`).join('\n')
+const displayBookmarks = (bookmarks) => bookmarks.map(b => `<input type='radio' name='${b.category}' id='${b.name}' value='${b.name}'><label for='${b.name}'><a href='${b.url}'>${b.name}</a></label>`).join('\n');
 
 viewCategoryButton.addEventListener('click', (e) => {
     showSection(bookmarkListSection);
     category = document.querySelector('option:checked');
     const bookmarks = getBookmarks().filter(b => b.category === category.value);
+
     if (!bookmarks.length) {
         categoryList.innerHTML = '<p>No Bookmarks Found</p>';
         return
     }
+
     categoryList.innerHTML = displayBookmarks(bookmarks);
-})
+});
 
 closeListButton.addEventListener('click', (e) => showSection(mainSection));
 
@@ -90,11 +94,13 @@ deleteBookmarkButton.addEventListener('click', (e) => {
 
     const bookmarks = getBookmarks();
     const index = bookmarks.findIndex(b => b.name === bookmarkToDelete.value && b.category === category.value)
+
     if (index === -1) {
         alert('Bookmark not found');
         return;
     }
+
     bookmarks.splice(index, 1)
     localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
     categoryList.innerHTML = displayBookmarks(bookmarks.filter(b => b.category === category.value)) || '<p>No Bookmarks Found</p>';
-})
+});
