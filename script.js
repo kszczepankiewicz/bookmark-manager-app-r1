@@ -15,16 +15,22 @@ const categoryDropdown = document.getElementById('category-dropdown');
 const categoryNames = document.getElementsByClassName('category-name');
 
 const getBookmarks = () => {
+    const raw = localStorage.getItem('bookmarks');
+    if (!raw) return [];
+
+    let bookmarks;
     try {
-        let bookmarks = localStorage.getItem('bookmarks');
-        if (!bookmarks) return [];
-        bookmarks = JSON.parse(bookmarks);
-        if (!Array.isArray(bookmarks)) return [];
-        if (!bookmarks.every(obj => ['name', 'category', 'url'].every(p => Object.hasOwn(obj, p)))) return [];
-        return bookmarks;
+        bookmarks = JSON.parse(raw);
     } catch (error) {
         return [];
     }
+
+    if (!Array.isArray(bookmarks)) return [];
+
+    const props = ['name', 'category', 'url'];
+    if (!bookmarks.every(obj => props.every(p => Object.hasOwn(obj, p)))) return [];
+
+    return bookmarks;
 }
 
 const showSection = section => {
