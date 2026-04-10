@@ -1,7 +1,6 @@
 const mainSection = document.getElementById('main-section');
 const formSection = document.getElementById('form-section');
 const bookmarkListSection = document.getElementById('bookmark-list-section');
-// const categoryDropdown = document.getElementById('category-dropdown');
 const addBookmarkButton = document.getElementById('add-bookmark-button');
 const deleteBookmarkButton = document.getElementById('delete-bookmark-button');
 const addBookmarkButtonForm = document.getElementById('add-bookmark-button-form');
@@ -47,6 +46,12 @@ closeFormButton.addEventListener('click', displayOrCloseForm);
 
 addBookmarkButtonForm.addEventListener('click', (e) => {
     const bookmarks = getBookmarks();
+    try {
+        new URL.parse(url.value)
+    } catch (error) {
+        alert('Invalid url');
+        // return;
+    }
     bookmarks.push({ name: nameInput.value, category: category.value, url: url.value });
     localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
     nameInput.value = '';
