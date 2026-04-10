@@ -38,7 +38,9 @@ label {
     margin-left: 10px;
 }
 
-div {
+form>div,
+#dropdown,
+#buttons {
     padding: 30px;
     display: flex;
     justify-content: center;
