@@ -10,6 +10,7 @@ const viewCategoryButton = document.getElementById('view-category-button');
 const nameEl = document.getElementById('name');
 const url = document.getElementById('url');
 const categoryList = document.getElementById('category-list');
+const categoryDropdown = document.getElementById('category-dropdown');
 
 const categoryNames = document.getElementsByClassName('category-name');
 
@@ -33,11 +34,8 @@ const showSection = section => {
 
 const displayOrCloseForm = () => showSection(mainSection.classList.contains('hidden') ? mainSection : formSection);
 
-let category;
-
 addBookmarkButton.addEventListener('click', (e) => {
-    category = document.querySelector('option:checked');
-    Array.from(categoryNames).forEach(el => el.innerText = category.value);
+    Array.from(categoryNames).forEach(el => el.innerText = categoryDropdown.value);
     displayOrCloseForm();
 })
 
@@ -58,7 +56,7 @@ addBookmarkButtonForm.addEventListener('click', (e) => {
         // return;  //fcc test fails
     }
 
-    bookmarks.push({ name: nameEl.value, category: category.value, url: url.value });
+    bookmarks.push({ name: nameEl.value, category: categoryDropdown.value, url: url.value });
     localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
     nameEl.value = '';
     url.value = '';
@@ -71,8 +69,7 @@ const renderBookmarks = (bookmarks) => bookmarks.map(b => `<input type='radio' n
 
 viewCategoryButton.addEventListener('click', (e) => {
     showSection(bookmarkListSection);
-    category = document.querySelector('option:checked');
-    const bookmarks = getBookmarks().filter(b => b.category === category.value);
+    const bookmarks = getBookmarks().filter(b => b.category === categoryDropdown.value);
 
     if (!bookmarks.length) {
         categoryList.innerHTML = '<p>No Bookmarks Found</p>';
@@ -93,7 +90,7 @@ deleteBookmarkButton.addEventListener('click', (e) => {
     }
 
     const bookmarks = getBookmarks();
-    const index = bookmarks.findIndex(b => b.name === bookmarkToDelete.value && b.category === category.value)
+    const index = bookmarks.findIndex(b => b.name === bookmarkToDelete.value && b.category === categoryDropdown.value)
 
     if (index === -1) {
         alert('Bookmark not found');
@@ -102,5 +99,5 @@ deleteBookmarkButton.addEventListener('click', (e) => {
 
     bookmarks.splice(index, 1)
     localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
-    categoryList.innerHTML = renderBookmarks(bookmarks.filter(b => b.category === category.value)) || '<p>No Bookmarks Found</p>';
+    categoryList.innerHTML = renderBookmarks(bookmarks.filter(b => b.category === categoryDropdown.value)) || '<p>No Bookmarks Found</p>';
 });
