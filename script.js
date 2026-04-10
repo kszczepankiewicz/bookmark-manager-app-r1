@@ -71,7 +71,7 @@ addBookmarkButtonForm.addEventListener('click', (e) => {
 
 const displayOrHideCategory = () => showSection(mainSection.classList.contains('hidden') ? mainSection : bookmarkListSection);
 
-const renderBookmarks = (bookmarks) => bookmarks.map(b => `<input type='radio' name='${b.category}' id='${b.name}' value='${b.name}'><label for='${b.name}'><a href='${b.url}'>${b.name}</a></label>`).join('\n');
+const renderBookmarks = (bookmarks) => bookmarks.map(({ name, category, url }) => `<input type='radio' name='${category}' id='${name}' value='${name}'><label for='${name}'><a href='${url}'>${name}</a></label>`).join('\n');
 
 viewCategoryButton.addEventListener('click', (e) => {
     showSection(bookmarkListSection);
